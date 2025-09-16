@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'mes' => $_POST['mes'] ?? null,
             'local' => $_POST['local'] ?? null,
             'instalacao' => $_POST['instalacao'] ?? null,
-            'vencimento' => $_POST['vencimento'] ?? null,
             'consumo' => $_POST['consumo'] ?? 0,
             'multa' => $_POST['multa'] ?? 0,
             'total' => $_POST['total'] ?? 0,
@@ -43,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'mes' => $_POST['mes'] ?? null,
             'local' => $_POST['local'] ?? null,
             'instalacao' => $_POST['instalacao'] ?? null,
-            'vencimento' => $_POST['vencimento'] ?? null,
             'consumo' => $_POST['consumo'] ?? 0,
             'multa' => $_POST['multa'] ?? 0,
             'total' => $_POST['total'] ?? 0,
@@ -137,11 +135,6 @@ ob_start();
                        style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
             </div>
             <div>
-                <label for="vencimento" class="block text-sm font-medium text-gray-700">Vencimento</label>
-                <input type="date" name="vencimento" id="vencimento"
-                       style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
-            </div>
-            <div>
                 <label for="consumo" class="block text-sm font-medium text-gray-700">Consumo</label>
                 <input type="number" name="consumo" id="consumo" step="0.01" required
                        style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
@@ -224,7 +217,7 @@ ob_start();
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['mes'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['local'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['instalacao'] ?? '-'); ?></td>
-                            <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['vencimento'] ?? '-'); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['data_vencimento'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['consumo'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['multa'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['valor'] ?? '-'); ?></td>

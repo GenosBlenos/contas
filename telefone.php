@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'local' => $_POST['local'] ?? null,
             'numero' => $_POST['numero'] ?? null,
             'tridigito' => $_POST['tridigito'] ?? null,
-            'vencimento' => $_POST['vencimento'] ?? null,
             'consumo' => $_POST['consumo'] ?? 0,
             'multa' => $_POST['multa'] ?? 0,
             'cobrar' => $_POST['cobrar'] ?? 0,
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'local' => $_POST['local'] ?? null,
             'numero' => $_POST['numero'] ?? null,
             'tridigito' => $_POST['tridigito'] ?? null,
-            'vencimento' => $_POST['vencimento'] ?? null,
             'consumo' => $_POST['consumo'] ?? 0,
             'multa' => $_POST['multa'] ?? 0,
             'cobrar' => $_POST['cobrar'] ?? 0,
@@ -144,11 +142,6 @@ ob_start();
                            style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
                 </div>
                 <div>
-                    <label for="vencimento" class="block text-sm font-medium text-gray-700">Vencimento</label>
-                    <input type="date" name="vencimento" id="vencimento" 
-                           style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
-                </div>
-                <div>
                     <label for="consumo" class="block text-sm font-medium text-gray-700">Consumo</label>
                     <input type="number" name="consumo" id="consumo" step="0.01" required
                            style="border: 2px solid gray;" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#072a3a] focus:ring focus:ring-[#072a3a] focus:ring-opacity-50">
@@ -224,7 +217,6 @@ ob_start();
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Local</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Número</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tridígito</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vencimento</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Consumo</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Multa</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cobrar</th>
@@ -233,6 +225,7 @@ ob_start();
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Secretaria</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Classe de Consumo</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Instalação</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vencimento</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observações</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
@@ -245,7 +238,6 @@ ob_start();
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['local'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['numero'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['tridigito'] ?? '-'); ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['vencimento'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['consumo'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['multa'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['cobrar'] ?? '-'); ?></td>
@@ -254,6 +246,7 @@ ob_start();
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['secretaria'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['classe_consumo'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['instalacao'] ?? '-'); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['data_vencimento'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['observacoes'] ?? '-'); ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <?php if (($registro['status'] ?? $registro['Conta_status'] ?? '') === 'pago'): ?>

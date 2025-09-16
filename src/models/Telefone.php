@@ -1,6 +1,28 @@
 <?php
 require_once __DIR__ . '/../includes/Model.php';
 class Telefone extends Model {
+    protected $table = 'telefone';
+    protected $orderBy = 'id_telefone';
+    protected $fillable = [
+        'mes',
+        'local',
+        'numero',
+        'tridigito',
+        'vencimento',
+        'consumo',
+        'multa',
+        'cobrar',
+        'total',
+        'Conta_status',
+        'valor',
+        'data_vencimento',
+        'secretaria',
+        'classe_consumo',
+        'instalacao',
+        'observacoes',
+        'criado_por',
+        'atualizado_por'
+    ];
     public function buscarComFiltros($filtros = []) {
         $where = [];
         $params = [];
@@ -43,22 +65,9 @@ class Telefone extends Model {
         }
         return [];
     }
-    protected $table = 'telefone';
-    protected $orderBy = 'id_telefone';
-    protected $fillable = [
-        'mes',
-        'numero',
-        'tridigito',
-        'vencimento',
-        'consumo',
-        'multa',
-        'cobrar',
-        'total',
-        'criado_por',
-        'atualizado_por'
-    ];
+
     public function getConsumoMensal() {
-        $sql = "SELECT 
+        $sql = "SELECT
                     DATE_FORMAT(data_vencimento, '%Y-%m') as mes,
                     SUM(consumo) as total_consumo,
                     SUM(valor) as total_valor

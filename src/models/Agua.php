@@ -2,6 +2,30 @@
 require_once __DIR__ . '/../includes/Model.php';
 
 class Agua extends Model {
+    protected $table = 'agua';
+    protected $orderBy = 'id_agua';
+    protected $fillable = [
+        'mes',
+        'local',
+        'faturado',
+        'tarifa',
+        'afastamento',
+        'esgoto',
+        'desconto',
+        'outros',
+        'multa',
+        'total',
+        'Conta_status',
+        'valor',
+        'consumo',
+        'data_vencimento',
+        'secretaria',
+        'classe_consumo',
+        'instalacao',
+        'observacoes',
+        'criado_por',
+        'atualizado_por'
+    ];
     public function buscarComFiltros($filtros = []) {
         $where = [];
         $params = [];
@@ -44,23 +68,9 @@ class Agua extends Model {
         }
         return [];
     }
-    protected $table = 'agua';
-    protected $orderBy = 'id_agua';
-    protected $fillable = [
-        'data_vencimento',
-        'valor',
-        'consumo',
-        'Conta_status',
-        'local',
-        'observacoes',
-        'criado_por',
-        'secretaria',
-        'classe_consumo',
-        'instalacao'
-    ];
 
     public function getConsumoMensal() {
-        $sql = "SELECT 
+        $sql = "SELECT
                     DATE_FORMAT(data_vencimento, '%Y-%m') as mes,
                     SUM(consumo) as total_consumo,
                     SUM(valor) as total_valor
@@ -68,7 +78,7 @@ class Agua extends Model {
                 GROUP BY mes
                 ORDER BY mes DESC
                 LIMIT 12";
-        
+
         $result = $this->db->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
@@ -77,14 +87,14 @@ class Agua extends Model {
         $sql = "SELECT AVG(consumo) as media_consumo
                 FROM {$this->table}
                 WHERE data_vencimento >= DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH)";
-        
+
         $result = $this->db->query($sql);
         return $result ? $result->fetch_assoc()['media_consumo'] : 0;
     }
 
     public function getTotalPendente() {
-    $sql = "SELECT SUM(valor) as total FROM {$this->table} WHERE Conta_status = 'pendente'";
-    $result = $this->db->query($sql);
-    return $result ? $result->fetch_assoc()['total'] : 0;
+        $sql = "SELECT SUM(valor) as total FROM {$this->table} WHERE Conta_status = 'pendente'";
+        $result = $this->db->query($sql);
+        return $result ? $result->fetch_assoc()['total'] : 0;
     }
 }

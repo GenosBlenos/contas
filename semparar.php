@@ -239,6 +239,7 @@ ob_start();
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Veículo</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vencimento</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observações</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
@@ -251,6 +252,7 @@ ob_start();
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['veiculo'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['tipo'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['valor'] ?? '-'); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($registro['data_vencimento'] ?? '-'); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <?php if (($registro['status'] ?? $registro['Conta_status'] ?? '') === 'pago'): ?>
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Pago</span>

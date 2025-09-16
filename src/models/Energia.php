@@ -1,6 +1,25 @@
 <?php
 require_once __DIR__ . '/../includes/Model.php';
 class Energia extends Model {
+    protected $table = 'energia';
+    protected $orderBy = 'id_energia';
+    protected $fillable = [
+        'mes',
+        'local',
+        'instalacao',
+        'vencimento',
+        'consumo',
+        'multa',
+        'total',
+        'Conta_status',
+        'valor',
+        'data_vencimento',
+        'secretaria',
+        'classe_consumo',
+        'observacoes',
+        'criado_por',
+        'atualizado_por'
+    ];
     public function buscarComFiltros($filtros = []) {
         $where = [];
         $params = [];
@@ -43,20 +62,9 @@ class Energia extends Model {
         }
         return [];
     }
-    protected $table = 'agua';
-    protected $orderBy = 'id_agua';
-    protected $fillable = [
-        'data_vencimento',
-        'valor',
-        'consumo',
-        'Conta_status',
-        'local',
-        'observacoes',
-        'criado_por'
-    ];
 
     public function getConsumoMensal() {
-        $sql = "SELECT 
+        $sql = "SELECT
                     DATE_FORMAT(data_vencimento, '%Y-%m') as mes,
                     SUM(consumo) as total_consumo,
                     SUM(valor) as total_valor
