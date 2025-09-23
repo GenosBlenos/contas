@@ -18,11 +18,11 @@ $ip_address = $_SERVER['REMOTE_ADDR'] ?? 'IP Desconhecido';
     <h1>VOCÊ NÃO DEVERIA ESTAR AQUI.</h1>
     <p>Seu endereço de IP (<strong><?php echo htmlspecialchars($ip_address); ?></strong>) foi registrado.</p>
     <p>Não há escapatória. A única saída é fechar esta guia.</p>
-    <img src="../../assets/auth_pic.jpeg" alt="bubaiado" width="300" />
+    <img src="../../assets/auth_pic.jpeg" alt="bubaiado" width="400" />
 
     <script type="text/javascript">
         // IMPORTANTE: Substitua a URL abaixo pelo link que você deseja abrir.
-        // const urlParaAbrir = 'https://www.youtube.com/watch?v=wKnfyrGZwA0&pp=ygUKbW9ua3kgZmxpcA%3D%3D';
+        const urlParaAbrir = 'https://www.youtube.com/watch?v=wKnfyrGZwA0&pp=ygUKbW9ua3kgZmxpcA%3D%3D';
 
         // 1. Tenta abrir o link incessantemente.
         // A maioria dos navegadores bloqueará as tentativas após a primeira.

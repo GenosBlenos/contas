@@ -1,16 +1,8 @@
 <?php
-$current_page = basename($_SERVER['SCRIPT_NAME'], '.php');
-$current_module = $_GET['module'] ?? '';
-
-// Define os itens do menu com seus links
-$menu_items = [
-    ["label" => "Faturas", "href" => "faturas.php?module=$current_module", "id" => "faturas"],
-    ["label" => "Unidades", "href" => "unidades.php?module=$current_module", "id" => "unidades"],
-    ["label" => "KPIs", "href" => "kpis.php?module=$current_module", "id" => "kpis"],
-    ["label" => "Recomendações", "href" => "recomendacoes.php?module=$current_module", "id" => "recomendacoes"],
-    ["label" => "Documentos", "href" => "documentos.php?module=$current_module", "id" => "documentos"],
-    ["label" => "Configurações", "href" => "configuracoes.php?module=$current_module", "id" => "configuracoes"],
-];
+$script_name = basename($_SERVER['SCRIPT_NAME'], '.php');
+// Usamos $_GET['module'] diretamente, pois ele pode ser definido programaticamente
+// dentro de um script (ex: internet.php), o que filter_input(INPUT_GET,...) não captura.
+$module_param = isset($_GET['module']) ? htmlspecialchars($_GET['module'], ENT_QUOTES, 'UTF-8') : null;
 
 // Mapeamento dos módulos
 $modulos = [
@@ -18,28 +10,50 @@ $modulos = [
     'energia' => ['label' => 'Energia Elétrica', 'href' => 'energia.php', 'id' => 'energia'],
     'semparar' => ['label' => 'Sem Parar', 'href' => 'semparar.php', 'id' => 'semparar'],
     'telefone' => ['label' => 'Telefonia Fixa', 'href' => 'telefone.php', 'id' => 'telefone'],
+    'internet' => ['label' => 'Internet Predial', 'href' => 'internet.php', 'id' => 'internet'],
 ];
 
-// Adiciona o link do módulo atual no início do menu se um módulo estiver selecionado
-if (!empty($current_module) && isset($modulos[$current_module])) {
-    array_unshift($menu_items, $modulos[$current_module]);
+// Define os itens do menu com seus links
+$menu_items = [];
+if ($module_param && isset($modulos[$module_param])) {
+    $menu_items[] = $modulos[$module_param]; // Adiciona o link do módulo principal
+    $menu_items = [
+        ["label" => "Faturas", "href" => "faturas.php?module=$module_param", "id" => "faturas"],
+        ["label" => "Unidades", "href" => "unidades.php?module=$module_param", "id" => "unidades"],
+        ["label" => "KPIs", "href" => "kpis.php?module=$module_param", "id" => "kpis"],
+        ["label" => "Recomendações", "href" => "recomendacoes.php?module=$module_param", "id" => "recomendacoes"],
+        ["label" => "Documentos", "href" => "documentos.php?module=$module_param", "id" => "documentos"],
+        ["label" => "Configurações", "href" => "configuracoes.php?module=$module_param", "id" => "configuracoes"],
+    ];
 }
 
-// Oculta o menu em páginas específicas como dashboard, suporte e cadastro de faturas.
-// Mostra o menu para páginas de módulo (ex: index.php?page=agua) e páginas internas (ex: documentos.php).
-$isModulePage = ($current_page === 'index' && !empty($current_module) && $current_module !== 'dashboard');
-$isInternalPage = !in_array($current_page, ['index', 'support', 'cad_fatura_pdf']);
-if ($isModulePage || $isInternalPage):
+// O módulo "real" pode vir do parâmetro GET ou do nome do script.
+$current_page_for_menu = $module_param ?: $script_name;
+
+// O dashboard é acessado via index.php.
+if ($script_name === 'index') {
+    $current_page_for_menu = 'dashboard';
+}
+
+// Exibe o menu apenas se não estivermos no dashboard ou em outras páginas específicas.
+$no_menu_pages = ['dashboard', 'support', 'cad_fatura_pdf', 'gerar_csv'];
+$shouldShowMenu = !in_array($current_page_for_menu, $no_menu_pages) && !empty($menu_items);
+
+if ($shouldShowMenu):
 ?>
 <nav class="bg-[#147cac] text-white shadow">
-    <div class="mx-auto py-1">
-        <ul class="flex space-x-8 justify-center">
-            <?php foreach ($menu_items as $item):
-                $is_active = ($item['id'] === $current_page);
+    <div class="mx-auto px-4 py-2">
+        <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 sm:gap-x-8">
+            <?php foreach (array_merge($menu_items, [["label" => "Gerar CSV", "href" => "gerar_csv.php", "id" => "gerar_csv"]]) as $item):
+                $is_active = ($item['id'] === basename($_SERVER['SCRIPT_NAME'], '.php'));
+
+                $link_class = 'font-semibold transition px-3 py-2 rounded ';
+                $link_class .= $is_active ? 'bg-white text-[#147cac] pointer-events-none border-b-4 border-[#147cac] shadow-lg' : 'text-white hover:bg-[#106191]';
             ?>
             <li>
                 <a href="<?= htmlspecialchars($item['href']) ?>"
-                   class="font-semibold transition px-3 py-2 rounded <?php echo $is_active ? 'bg-white text-[#147cac] pointer-events-none border-b-4 border-[#147cac] shadow-lg' : 'text-white hover:bg-[#106191]'; ?>">
+                   class="<?= htmlspecialchars($link_class) ?>"
+                >
                     <?= htmlspecialchars($item['label']) ?>
                 </a>
             </li>

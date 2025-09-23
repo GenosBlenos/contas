@@ -59,8 +59,29 @@ CREATE TABLE telefone (
     id_telefone INT NOT NULL PRIMARY KEY,
     mes INT(2),
     local VARCHAR(60), 
-    numero VARCHAR(20), -- Alterado de INT(1) para VARCHAR(20) para acomodar números de telefone.
+    numero VARCHAR(20),
     tridigito INT,
+    consumo FLOAT NOT NULL,
+    multa FLOAT,
+    cobrar FLOAT,
+    total FLOAT,
+    criada_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    criado_por INT,
+    atualizado_por INT,
+    Conta_status VARCHAR(20) NOT NULL DEFAULT 'pendente',
+    valor DECIMAL(10,2) NOT NULL DEFAULT 0,
+    data_vencimento DATE NOT NULL,
+    secretaria VARCHAR(100),
+    classe_consumo VARCHAR(100),
+    instalacao VARCHAR(100),
+    observacoes VARCHAR(100)
+);
+
+CREATE TABLE internet (
+    id_wifi INT NOT NULL PRIMARY KEY,
+    mes INT(2),
+    local VARCHAR(60), 
     consumo FLOAT NOT NULL,
     multa FLOAT,
     cobrar FLOAT,

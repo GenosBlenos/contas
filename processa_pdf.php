@@ -114,6 +114,24 @@ $pdfFilePath = $_FILES['pdfFile']['tmp_name'];
                 $dateObj = !empty($m[1]) ? DateTime::createFromFormat('d/m/Y', $m[1]) : false;
                 $dados['data_vencimento'] = $dateObj ? $dateObj->format('Y-m-d') : null;
                 break;
+            
+            case 'internet':
+                $tabela = 'internet';
+                // Regex para contas de internet (exemplo)
+                preg_match('/(?:Provedor|Empresa):\s*([^\n\r]+)/i', $text, $m);
+                $dados['provedor'] = trim($m[1] ?? 'N/A');
+
+                preg_match('/(?:Total\s+a\s+Pagar|VALOR\s+TOTAL)\s+R?\$\s*([\d,\.]+)/i', $text, $m);
+                $dados['valor'] = (float) str_replace(',', '.', $m[1] ?? '0');
+
+                // Regex mais robusta para data, que pode ter "Vencimento" ou "Vence em"
+                preg_match('/(?:Vencimento|Vence\s+em)\s*:?\s*(\d{2}\/\d{2}\/\d{4})/i', $text, $m);
+                $dateObj = !empty($m[1]) ? DateTime::createFromFormat('d/m/Y', $m[1]) : false;
+                $dados['data_vencimento'] = $dateObj ? $dateObj->format('Y-m-d') : null;
+
+                preg_match('/(?:Velocidade|Plano):\s*([\d]+\s*(?:Mbps|Gbps|Mega|Giga))/i', $text, $m);
+                $dados['velocidade'] = trim($m[1] ?? 'N/A');
+                break;
 
             default:
                 // Se não for uma categoria conhecida, pode salvar na tabela genérica como fallback

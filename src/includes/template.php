@@ -7,26 +7,36 @@ if (!isset($_SESSION['logado']) || !$_SESSION['logado']) {
 }
 ?>
 
+<?php
+$current_script = basename($_SERVER['SCRIPT_NAME'], '.php');
+$current_module = $_GET['module'] ?? null;
+
+// Não mostrar breadcrumbs no dashboard (acessado via index.php ou ?module=dashboard)
+$isDashboard = ($current_script === 'index' || $current_module === 'dashboard');
+?>
+
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb -->
-    <nav class="flex mb-8" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-            <li class="inline-flex items-center">
-                <a href="index.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#147cac]">
-                    <img src="./assets/home.png" alt="Home" class="w-4 h-4 mr-2">
-                    Início
-                </a>
-            </li>
-            <li aria-current="page">
-                <div class="flex items-center">
-                    <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                    </svg>
-                    <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2"><?php echo $pageTitle ?? 'Página'; ?></span>
-                </div>
-            </li>
-        </ol>
-    </nav>
+    <?php if (!$isDashboard): ?>
+        <nav class="flex mb-8" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="index.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-[#147cac]">
+                        <img src="./assets/home.png" alt="Home" class="w-4 h-4 mr-2">
+                        Início
+                    </a>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                        </svg>
+                        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2"><?php echo $pageTitle ?? 'Página'; ?></span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+    <?php endif; ?>
 
     <!-- Flash Messages -->
     <?php

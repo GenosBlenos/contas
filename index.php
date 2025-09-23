@@ -18,6 +18,7 @@ $standalonePages = [
     'energia',
     'semparar',
     'telefone',
+    'internet',
     'support',
     'cad_fatura_pdf',
 ];
